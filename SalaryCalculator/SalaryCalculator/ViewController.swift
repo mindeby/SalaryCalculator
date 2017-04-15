@@ -8,14 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     @IBOutlet weak var resultsLabel: UILabel!
     @IBOutlet weak var myTextFieldLabel: UITextField!
+    @IBOutlet weak var ddPicker: UIPickerView!
+    
+    let ddPickerData = [0.0, 0.5, 1.0]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        ddPicker.dataSource = self
+        ddPicker.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,6 +46,32 @@ class ViewController: UIViewController {
         return (
             numberToCalc * 2.0
         )
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return ddPickerData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let rawItem = ddPickerData[row]
+        let stringToShow: String
+        
+        switch rawItem {
+            case 0.0:
+                stringToShow = "0%"
+            case 0.5:
+                stringToShow = "50%"
+            case 1.0:
+                stringToShow = "100%"
+            default:
+                stringToShow = "Debs fix this"
+        }
+        
+        return stringToShow
     }
 }
 
