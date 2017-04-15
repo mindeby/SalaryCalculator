@@ -15,6 +15,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var ddPicker: UIPickerView!
     
     let ddPickerData = [0.0, 0.5, 1.0]
+    var selectedDD: Double = 0.0
+    
+    var salarioBase: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,24 +31,21 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     @IBAction func typingInTextField(_ sender: Any) {
-        var theNumberThatWeGot = Double(myTextFieldLabel.text!)
+        let theNumberThatWeGot = Double(myTextFieldLabel.text!)
+        
         if let theNumberThatWeGot = theNumberThatWeGot {
-            let numberConverted = simpleCalc(numberToCalc: theNumberThatWeGot)
-            
-            print(numberConverted)
-            resultsLabel.text = String(numberConverted)
+            self.salarioBase = theNumberThatWeGot
+            calculateSalarioLiquid()
             
         } else {
-            // TODO: Replace passing a literal "0.0" string to the label, by the actual Double value
-            theNumberThatWeGot = 0.0
-            myTextFieldLabel.text = "0.0"
+            self.salarioBase = 0.0
+            calculateSalarioLiquid()
         }
     }
     
-    func simpleCalc(numberToCalc: Double) -> Double {
-        return (
-            numberToCalc * 2.0
-        )
+    func calculateSalarioLiquid() {
+        let valueToShow: Double = (self.salarioBase + (self.salarioBase * self.selectedDD))
+        self.resultsLabel.text = String(valueToShow)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -72,6 +72,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
         
         return stringToShow
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectedDD = self.ddPickerData[row]
+        calculateSalarioLiquid()
+        print(self.selectedDD)
     }
 }
 
