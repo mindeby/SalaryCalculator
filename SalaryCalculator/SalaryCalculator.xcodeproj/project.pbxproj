@@ -14,7 +14,6 @@
 		91B2F07E1EA2A111005FAC57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91B2F07C1EA2A111005FAC57 /* LaunchScreen.storyboard */; };
 		91B2F0891EA2A112005FAC57 /* SalaryCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2F0881EA2A112005FAC57 /* SalaryCalculatorTests.swift */; };
 		91B2F0941EA2A112005FAC57 /* SalaryCalculatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2F0931EA2A112005FAC57 /* SalaryCalculatorUITests.swift */; };
-		DEC8FC0E1EA2AA310052F564 /* myHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC8FC0D1EA2AA310052F564 /* myHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +47,6 @@
 		91B2F08F1EA2A112005FAC57 /* SalaryCalculatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalaryCalculatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B2F0931EA2A112005FAC57 /* SalaryCalculatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalaryCalculatorUITests.swift; sourceTree = "<group>"; };
 		91B2F0951EA2A112005FAC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DEC8FC0D1EA2AA310052F564 /* myHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +100,6 @@
 				91B2F0731EA2A111005FAC57 /* AppDelegate.swift */,
 				91B2F0751EA2A111005FAC57 /* ViewController.swift */,
 				91B2F0771EA2A111005FAC57 /* Main.storyboard */,
-				DEC8FC0D1EA2AA310052F564 /* myHelpers.swift */,
 				91B2F07A1EA2A111005FAC57 /* Assets.xcassets */,
 				91B2F07C1EA2A111005FAC57 /* LaunchScreen.storyboard */,
 				91B2F07F1EA2A111005FAC57 /* Info.plist */,
@@ -265,7 +262,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEC8FC0E1EA2AA310052F564 /* myHelpers.swift in Sources */,
 				91B2F0761EA2A111005FAC57 /* ViewController.swift in Sources */,
 				91B2F0741EA2A111005FAC57 /* AppDelegate.swift in Sources */,
 			);
