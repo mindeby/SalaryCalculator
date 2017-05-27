@@ -20,11 +20,47 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var salarioBase: Double = 0.0
     var salarioLiquido: Double = 0.0
     
+    // Setting Up the Picker View
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return ddPickerData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let rawItem = ddPickerData[row]
+        let stringToShow: String
+        
+        switch rawItem {
+        case 0.0:
+            stringToShow = "0%"
+        case 0.5:
+            stringToShow = "50%"
+        case 1.0:
+            stringToShow = "100%"
+        default:
+            stringToShow = "Something went wrong"
+        }
+        
+        
+        return stringToShow
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedDD = ddPickerData[row]
+        calculateSalarioLiquido()
+    }
+    
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ddPicker.dataSource = self
         ddPicker.delegate = self
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,22 +71,24 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 
 
     @IBAction func typingInTextField(_ sender: Any) {
+
+
         let theNumberThatWeGot = Double(myTextFieldLabel.text!)
         
         if let theNumberThatWeGot = theNumberThatWeGot {
-            salarioBase = theNumberThatWeGot
+            salarioBase.self = theNumberThatWeGot
             calculateSalarioLiquido()
          
             
         } else {
-            salarioBase = 0.0
+            salarioBase.self = 0.0
             calculateSalarioLiquido()
           
         }
         calculateSalarioLiquido()
-        let valueToShow: Double = self.salarioLiquido // This will be salario Liquido
-        self.resultsLabel.text = String(valueToShow)
+        
     }
+    
     
     
     //calculating salario Liquido
@@ -64,9 +102,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let diasSubsidio: Double = 22.0
         let diariaSubsidioA: Double = 7.23
         
-        salarioBruto = self.salarioBase + (self.salarioBase * self.selectedDD)
+        salarioBruto = self.salarioBase + (self.salarioBase * (self.selectedDD/12*2))
         
-        switch salarioBruto {
+        switch self.salarioBase {
             case 0...610 :
                 irsPercentage = 0.0
             case 610...618:
@@ -105,45 +143,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
 
         self.salarioLiquido = salarioBruto - (salarioBruto * ssPercentage) - (salarioBruto * irsPercentage) + (diasSubsidio * diariaSubsidioA)
-    }
 
-    
-    // Setting Up the Picker View
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return ddPickerData.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let rawItem = ddPickerData[row]
-        let stringToShow: String
+        let valueToShow: Double = self.salarioLiquido
+        self.resultsLabel.text = String(valueToShow)
+        print(salarioBruto)
         
-        switch rawItem {
-            case 0.0:
-                stringToShow = "0%"
-            case 0.5:
-                stringToShow = "50%"
-            case 1.0:
-                stringToShow = "100%"
-            default:
-                stringToShow = "Something went wrong"
-        }
-        
-        return stringToShow
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.selectedDD = self.ddPickerData[row]
-        calculateSalarioLiquido()
-        print(self.selectedDD)
-    }
     
+
 
 }
-
 
 
 
