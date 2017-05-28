@@ -10,10 +10,42 @@ import UIKit
 
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    let numberFormatter: NumberFormatter = {
+        let nf = NumberFormatter()
+        nf.numberStyle = .decimal
+        nf.minimumFractionDigits = 0
+        nf.maximumFractionDigits = 1
+        return nf
+    } ()
 
     @IBOutlet weak var resultsLabel: UILabel!
     @IBOutlet weak var myTextFieldLabel: UITextField!
     @IBOutlet weak var ddPicker: UIPickerView!
+    
+    @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var stepperValue: UILabel!
+    
+    var diasSubsidio: Double = 22.0
+
+    @IBAction func stepperAction(_ sender: Any) {
+        stepperValue.text = "\(Int(stepper.value))" 
+        let theStepperValue = Double("\(Int(stepper.value))" )
+
+        if let theStepperValue = theStepperValue {
+            diasSubsidio.self = theStepperValue
+            calculateSalarioLiquido()
+            
+            
+        } else {
+            diasSubsidio.self = 0.0
+            calculateSalarioLiquido()
+            
+        }
+        calculateSalarioLiquido()
+
+    }
+    
     
     let ddPickerData = [0.0, 0.5, 1.0]
     var selectedDD: Double = 0.0
@@ -100,7 +132,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         var salarioBruto: Double = 0.0
         var irsPercentage: Double = 0.0
         let ssPercentage: Double = 0.11
-        let diasSubsidio: Double = 22.0
         let diariaSubsidioA: Double = 7.23
         
         salarioBruto = self.salarioBase + (self.salarioBase * (self.selectedDD/12*2))
@@ -147,7 +178,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 
         let valueToShow: Double = self.salarioLiquido
         self.resultsLabel.text = String(valueToShow)
-        print(salarioBruto)
+        
         
     }
     
