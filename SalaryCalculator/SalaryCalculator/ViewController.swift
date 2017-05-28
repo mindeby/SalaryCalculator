@@ -8,16 +8,17 @@
 
 import UIKit
 
+// This is a helper function, to round up the number of decimals
+extension Double {
+    /// Rounds the double to decimal places value
+    func roundTo(places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    let numberFormatter: NumberFormatter = {
-        let nf = NumberFormatter()
-        nf.numberStyle = .decimal
-        nf.minimumFractionDigits = 0
-        nf.maximumFractionDigits = 1
-        return nf
-    } ()
 
     @IBOutlet weak var resultsLabel: UILabel!
     @IBOutlet weak var myTextFieldLabel: UITextField!
@@ -122,7 +123,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
     }
     
-    
+    let numberFormatter: NumberFormatter = {
+        let nf = NumberFormatter()
+        nf.numberStyle = .decimal
+        nf.minimumFractionDigits = 0
+        nf.maximumFractionDigits = 2
+        return nf
+    } ()
     
     //calculating salario Liquido
     
@@ -177,14 +184,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.salarioLiquido = salarioBruto - (salarioBruto * ssPercentage) - (salarioBruto * irsPercentage) + (diasSubsidio * diariaSubsidioA)
 
         let valueToShow: Double = self.salarioLiquido
-        self.resultsLabel.text = String(valueToShow)
-        
+        let valueRoundedUp = valueToShow.roundTo(places: 2)
+        self.resultsLabel.text = String(valueRoundedUp)
+    
         
     }
-    
-    
-
-
 }
 
 
