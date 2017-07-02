@@ -8,6 +8,10 @@
 
 import UIKit
 
+
+
+
+
 // This is a helper function, to round up the number of decimals
 extension Double {
     /// Rounds the double to decimal places value
@@ -17,17 +21,23 @@ extension Double {
     }
 }
 
+
+
+
+
+
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
 
     @IBOutlet weak var resultsLabel: UILabel!
     @IBOutlet weak var myTextFieldLabel: UITextField!
-    @IBOutlet weak var ddPicker: UIPickerView!
     
+    @IBOutlet weak var ddPicker: UIPickerView!
     @IBOutlet weak var stepper: UIStepper!
     @IBOutlet weak var stepperValue: UILabel!
     
-    var diasSubsidio: Double = 22.0
+    @IBOutlet weak var labelDiaria: UITextField!
+    
 
     @IBAction func stepperAction(_ sender: Any) {
         stepperValue.text = "\(Int(stepper.value))" 
@@ -52,6 +62,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var selectedDD: Double = 0.0
     var salarioBase: Double = 0.0
     var salarioLiquido: Double = 0.0
+    var diariaSA: Double = 0.0
+    var diasSubsidio: Double = 22.0
     
     // Setting Up the Picker View
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -102,7 +114,26 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     // This is just a comment to test if Debs know how to git
-
+    
+    
+    @IBAction func typedValorDiaria(_ sender: Any) {
+        let valorRecebido = Double(labelDiaria.text!)
+        
+        if let valorRecebido = valorRecebido {
+            diariaSA.self = valorRecebido
+            calculateSalarioLiquido()
+            
+        } else {
+            diariaSA.self = 0.0
+            calculateSalarioLiquido()
+            
+        }
+        
+        calculateSalarioLiquido()
+        
+    }
+        
+    
 
     @IBAction func typingInTextField(_ sender: Any) {
 
@@ -123,6 +154,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
     }
     
+
+    
+
+    
     let numberFormatter: NumberFormatter = {
         let nf = NumberFormatter()
         nf.numberStyle = .decimal
@@ -139,7 +174,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         var salarioBruto: Double = 0.0
         var irsPercentage: Double = 0.0
         let ssPercentage: Double = 0.11
-        let diariaSubsidioA: Double = 7.23
         
         salarioBruto = self.salarioBase + (self.salarioBase * (self.selectedDD/12*2))
         
@@ -181,10 +215,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             default: break
         }
 
-        self.salarioLiquido = salarioBruto - (salarioBruto * ssPercentage) - (salarioBruto * irsPercentage) + (diasSubsidio * diariaSubsidioA)
+        self.salarioLiquido = salarioBruto - (salarioBruto * ssPercentage) - (salarioBruto * irsPercentage) + (diasSubsidio * diariaSA.self)
 
         let valueToShow: Double = self.salarioLiquido
-        let valueRoundedUp = valueToShow.roundTo(places: 2)
+        let valueRoundedUp = valueToShow.roundTo(places: 2) // 👈 "Places" is the number of decimals BTW ;)
         self.resultsLabel.text = String(valueRoundedUp)
     
         
